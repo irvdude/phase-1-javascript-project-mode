@@ -22,7 +22,7 @@ fetch("http://localhost:3000/devices")
             const description = document.createElement('p');
             description.classList.add('card-description');
             description.textContent = `This device contians ${element.data.capacity}GB of storage and features a nice ${element.data.color} color.`;
-            description.style.display = "none"
+            description.style.display = "block"
             card.appendChild(description);
 
             const showHide = document.createElement('button')
@@ -42,16 +42,21 @@ fetch("http://localhost:3000/devices")
     })
 
 // let showDescription = false
-
 document.addEventListener("DOMContentLoaded", function () {
-    const showHide = document.querySelectorAll('.card-showhide')
+    const showHide = document.querySelectorAll('.card-showhide');
+    
     showHide.forEach(function (showhide) {
-        const descriptions = document.querySelectorAll('.card-description')
-        showhide.addEventListener('click', function () {
-            descriptions.forEach(function (description) {
-                description.style.display = block
-            })
-        })
-    })
-
-});
+      const descriptions = document.querySelectorAll('.card-description');
+      
+      showhide.addEventListener('click', function () {
+        console.log('Button clicked:');
+        descriptions.forEach(function (description) {
+          if (description.style.display !== "none") {
+            description.style.display = "none";
+          } else {
+            description.style.display = "block";
+          }
+        });
+      });
+    });
+  });
