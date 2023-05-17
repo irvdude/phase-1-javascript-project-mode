@@ -44,16 +44,14 @@ fetch("http://localhost:3000/devices")
 // let showDescription = false
 
 document.addEventListener("DOMContentLoaded", function () {
-    const cards = document.querySelectorAll('.card');
-    const descriptions = document.querySelectorAll('.card-description');
-  
-    cards.forEach(function (card) {
-      card.addEventListener('mouseover', function () {
-        descriptions.forEach(function (description) {
-          if (description.style.display !== "block") {
-            description.style.display = "block";
-          }
-        });
-      });
-    });
-  });
+    const showHide = document.querySelectorAll('.card-showhide')
+    showHide.forEach(function (showhide) {
+        const descriptions = document.querySelectorAll('.card-description')
+        showhide.addEventListener('click', function () {
+            descriptions.forEach(function (description) {
+                description.style.display = block
+            })
+        })
+    })
+
+});
