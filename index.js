@@ -22,7 +22,13 @@ fetch("http://localhost:3000/devices")
             const description = document.createElement('p');
             description.classList.add('card-description');
             description.textContent = `This device contians ${element.data.capacity}GB of storage and features a nice ${element.data.color} color.`;
+            description.style.display = "none"
             card.appendChild(description);
+
+            const showHide = document.createElement('button')
+            showHide.classList.add('card-showhide')
+            showHide.textContent = `Show description`
+            card.appendChild(showHide)
 
             const price = document.createElement('button');
             price.classList.add('card-price');
@@ -35,19 +41,19 @@ fetch("http://localhost:3000/devices")
         });
     })
 
-//Show/hide 'click' event listener for descripton
-let showDescription = false
-let description = document.querySelector('.card-description')
+// let showDescription = false
+
 document.addEventListener("DOMContentLoaded", function () {
-    const addButton = document.createElement('button')
-    addButton.textContent = `Show Description`
-    description.appendChild(addButton)
-    addButton.addEventListener("click", function () {
-        showDescription = !showDescription
-        if (showDescription) {
-            deviceContainer.style.display = "block"
-        } else {
-            deviceContainer.style.display = "none"
-        }
-    })
-})
+    const cards = document.querySelectorAll('.card');
+    const descriptions = document.querySelectorAll('.card-description');
+  
+    cards.forEach(function (card) {
+      card.addEventListener('mouseover', function () {
+        descriptions.forEach(function (description) {
+          if (description.style.display !== "block") {
+            description.style.display = "block";
+          }
+        });
+      });
+    });
+  });
