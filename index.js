@@ -41,22 +41,36 @@ fetch("http://localhost:3000/devices")
         });
     })
 
-// let showDescription = false
-document.addEventListener("DOMContentLoaded", function () {
-    const showHide = document.querySelectorAll('.card-showhide');
+    const button = document.querySelectorAll('#headButton')
+    button.forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+            console.log('hello', e);
+        })
+    })
+
+// document.addEventListener('DOMContentLoaded', function () {
+//     const checkPrice = document.querySelectorAll('.card-price')
+//     checkPrice.forEach(element => {
+//         element.addEventListener('click', function () {
+//             console.log(`$$$`);
+//         })
+//     });
+// })
+// document.addEventListener("DOMContentLoaded", function () {
+//     const showHide = document.querySelectorAll('.card-showhide');
     
-    showHide.forEach(function (showhide) {
-      const descriptions = document.querySelectorAll('.card-description');
+//     showHide.forEach(function (showhide) {
+//       const descriptions = document.querySelectorAll('.card-description');
       
-      showhide.addEventListener('click', function () {
-        console.log('Button clicked:');
-        descriptions.forEach(function (description) {
-          if (description.style.display !== "none") {
-            description.style.display = "none";
-          } else {
-            description.style.display = "block";
-          }
-        });
-      });
-    });
-  });
+//       showhide.addEventListener('click', function () {
+//         console.log('Button clicked:');
+//         descriptions.forEach(function (description) {
+//           if (description.style.display !== "none") {
+//             description.style.display = "none";
+//           } else {
+//             description.style.display = "block";
+//           }
+//         });
+//       });
+//     });
+//   });
