@@ -41,12 +41,12 @@ fetch("http://localhost:3000/devices")
         });
     })
 
-    const button = document.querySelectorAll('#headButton')
-    button.forEach(function (btn) {
-        btn.addEventListener('click', function (e) {
-            console.log('hello', e);
+    const button = document.querySelector('#headButton')
+    //button.forEach(function (btn) {
+        button.addEventListener('click', function () {
+            console.log('hello');
         })
-    })
+    //})
 
 // document.addEventListener('DOMContentLoaded', function () {
 //     const checkPrice = document.querySelectorAll('.card-price')
