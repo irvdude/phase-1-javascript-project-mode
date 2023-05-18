@@ -1,9 +1,8 @@
 //Initial fetch to API
 fetch("http://localhost:3000/devices")
     .then(response => response.json())
-    .then(data => {
-        data.forEach(device => renderdevice(device))
-    })
+    .then(data => data.forEach(device => renderdevice(device))
+    )
 
 function renderdevice(data) {
     
@@ -45,12 +44,7 @@ function renderdevice(data) {
     });
 }
 
-    const button = document.querySelector('#headButton')
-    //button.forEach(function (btn) {
-        button.addEventListener('click', function () {
-            console.log('hello');
-        })
-    //})
+
 
 // document.addEventListener('DOMContentLoaded', function () {
 //     const checkPrice = document.querySelectorAll('.card-price')
