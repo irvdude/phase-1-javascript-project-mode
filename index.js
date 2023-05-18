@@ -36,19 +36,23 @@ function renderDevice(data) {
     price.textContent = `Buy it now at $${data.data.price}`;
     card.appendChild(price);
 
+    price.addEventListener('click', function () {
+        console.log(price.textContent);
+    })
+
     deviceContainer.appendChild(card);
 }
 
 
-
-document.addEventListener('DOMContentLoaded', function () {
-    const checkPrice = document.querySelectorAll('.card-price')
-    checkPrice.forEach(function (price) {
-        price.addEventListener('click', function () {
-            console.log('hello');
-        })
-    })
-})
+// const card = document.querySelectorAll('.card')
+// document.addEventListener('DOMContentLoaded', function () {
+//     const checkPrice = card.querySelectorAll('.card-price')
+//     checkPrice.forEach(function (price) {
+//         price.addEventListener('click', function () {
+//             console.log('hello');
+//         })
+//     })
+// })
 
 const hiButton = document.querySelector('#headButton')
 hiButton.addEventListener('click', function () {
