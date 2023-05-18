@@ -1,59 +1,60 @@
 //Initial fetch to API
 fetch("http://localhost:3000/devices")
     .then(response => response.json())
-    .then(data => data.forEach(device => renderdevice(device))
-    )
+    //Uses returned data from JSON Object to be rendered through renderDevice
+    .then(data => data.forEach(device => renderDevice(device)));
 
-function renderdevice(data) {
-    
+function renderDevice(data) {
     const deviceContainer = document.getElementById('device-container');
     //Card builder;  appends image, name and description which includes price and capacity.
-    data.forEach(element => {
-        const card = document.createElement('div');
-        card.classList.add('card');
+    const card = document.createElement('div');
+    card.classList.add('card');
 
-        const image = document.createElement('img');
-        image.classList.add('card-image');
-        image.src = element.image;
-        card.appendChild(image);
+    const image = document.createElement('img');
+    image.classList.add('card-image');
+    image.src = data.image;
+    card.appendChild(image);
 
-        const title = document.createElement('h2');
-        title.classList.add('card-title');
-        title.textContent = element.name;
-        card.appendChild(title);
+    const title = document.createElement('h2');
+    title.classList.add('card-title');
+    title.textContent = data.name;
+    card.appendChild(title);
 
-        const description = document.createElement('p');
-        description.classList.add('card-description');
-        description.textContent = `This device contians ${element.data.capacity}GB of storage and features a nice ${element.data.color} color.`;
-        description.style.display = "block"
-        card.appendChild(description);
+    const description = document.createElement('p');
+    description.classList.add('card-description');
+    description.textContent = `This device contains ${data.data.capacity}GB of storage and features a nice ${data.data.color} color.`;
+    description.style.display = "block";
+    card.appendChild(description);
 
-        const showHide = document.createElement('button')
-        showHide.classList.add('card-showhide')
-        showHide.textContent = `Show description`
-        card.appendChild(showHide)
+    const showHide = document.createElement('button')
+    showHide.classList.add('card-showhide')
+    showHide.textContent = `Show description`
+    card.appendChild(showHide)
 
-        const price = document.createElement('button');
-        price.classList.add('card-price');
-        price.textContent = `Buy it now at $${element.data.price}`;
-        card.appendChild(price);
+    const price = document.createElement('button');
+    price.classList.add('card-price');
+    price.textContent = `Buy it now at $${data.data.price}`;
+    card.appendChild(price);
 
-        deviceContainer.appendChild(card);
-
-
-    });
+    deviceContainer.appendChild(card);
 }
 
 
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     const checkPrice = document.querySelectorAll('.card-price')
-//     checkPrice.forEach(element => {
-//         element.addEventListener('click', function () {
-//             console.log(`$$$`);
-//         })
-//     });
-// })
+document.addEventListener('DOMContentLoaded', function () {
+    const checkPrice = document.querySelectorAll('.card-price')
+    checkPrice.forEach(function (price) {
+        price.addEventListener('click', function () {
+            console.log('hello');
+        })
+    })
+})
+
+const hiButton = document.querySelector('#headButton')
+hiButton.addEventListener('click', function () {
+    console.log('hello');
+})
+
 // document.addEventListener("DOMContentLoaded", function () {
 //     const showHide = document.querySelectorAll('.card-showhide');
     
