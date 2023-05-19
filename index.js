@@ -2,11 +2,14 @@
 fetch("http://localhost:3000/devices")
     .then(response => response.json())
     //Uses returned data from JSON Object to be rendered through renderDevice
-    .then(data => data.forEach(device => renderDevice(device)));
+    .then(data => {
+        data.forEach(device => renderDevice(device));
+        renderCart(); // Render the cart form once after all the devices are rendered
+    });
 
 function renderDevice(data) {
     const deviceContainer = document.getElementById('device-container');
-    //Card builder;  appends image, name and description which includes price and capacity.
+    //Card builder; appends image, name and description which includes price and capacity.
     const card = document.createElement('div');
     card.classList.add('card');
 
@@ -36,20 +39,10 @@ function renderDevice(data) {
     price.textContent = `Buy it now at $${data.data.price}`;
     card.appendChild(price);
 
-    const cart = document.createElement('form');
-    cart.classList.add('device-cart');
-    const cartTitle = document.createElement('h2');
-    cartTitle.textContent = 'Cart';
-    cart.appendChild(cartTitle);
-    const cartItems = document.createElement('div');
-    cartItems.classList.add('cart-items');
-    cart.appendChild(cartItems);
-
     price.addEventListener('click', function () {
         price.textContent = `${title.textContent} added!`;
-        console.log(price.textContent);
         addToCart(data);
-        totalCost(data)
+        calculateTotalPrice();
     });
 
     showHide.addEventListener('click', function () {
@@ -62,60 +55,81 @@ function renderDevice(data) {
         }
     });
 
-    function addToCart(device) {
-        const cartItemsContainer = document.querySelector('.cart-items');
-
-        const cartItem = document.createElement('div');
-        cartItem.classList.add('cart-item');
-        cartItem.textContent = device.name;
-        cartItemsContainer.appendChild(cartItem);
-    }
-
-    function totalCost(device) {
-      const cartItemsContainer = document.querySelector('.cart-items');
-
-      const priceTotal = device.data.price;
-      const priceTotalDiv = document.createElement('div');
-      priceTotalDiv.classList.add('cart-cost');
-      priceTotalDiv.textContent = priceTotal;
-      cartItemsContainer.appendChild(priceTotalDiv);
-  }
-
-    deviceContainer.appendChild(cart);
     deviceContainer.appendChild(card);
 }
 
+function renderCart() {
+    const deviceContainer = document.getElementById('device-container');
 
-// const card = document.querySelectorAll('.card')
-// document.addEventListener('DOMContentLoaded', function () {
-//     const checkPrice = card.querySelectorAll('.card-price')
-//     checkPrice.forEach(function (price) {
-//         price.addEventListener('click', function () {
-//             console.log('hello');
-//         })
-//     })
-// })
+    const cart = document.createElement('form');
+    cart.classList.add('device-cart');
+    const cartTitle = document.createElement('h2');
+    cartTitle.textContent = 'Cart';
+    cart.appendChild(cartTitle);
+    const cartItems = document.createElement('div');
+    cartItems.classList.add('cart-items');
+    cart.appendChild(cartItems);
+    const totalPrice = document.createElement('div');
+    totalPrice.classList.add('total-price');
+    cart.appendChild(totalPrice);
 
-// const hiButton = document.querySelector('#headButton')
-// hiButton.addEventListener('click', function () {
-//     console.log('hello');
-// })
+    const checkoutButton = document.createElement('button');
+    checkoutButton.textContent = 'Checkout';
+    cart.appendChild(checkoutButton);
 
-// document.addEventListener("DOMContentLoaded", function () {
-//     const showHide = document.querySelectorAll('.card-showhide');
+    checkoutButton.addEventListener('click', function (event) {
+        event.preventDefault(); // Prevent the form from submitting
+        checkout();
+    });
+
+    deviceContainer.appendChild(cart);
+}
+
+function addToCart(device) {
+    const cartItemsContainer = document.querySelector('.cart-items');
+
+    const cartItem = document.createElement('div');
+    cartItem.classList.add('cart-item');
+    cartItem.textContent = device.name;
+    cartItem.dataset.price = device.data.price; // Set the device price as a custom data attribute
+    cartItemsContainer.appendChild(cartItem);
+}
+
+function calculateTotalPrice() {
+    const cartItemsContainer = document.querySelector('.cart-items');
+    const cartItems = cartItemsContainer.children;
+    let totalPrice = 0;
+
+    for (let i = 0; i < cartItems.length; i++) {
+        const price = cartItems[i].dataset.price;
+        totalPrice += parseFloat(price);
+    }
+
+    const totalPriceContainer = document.querySelector('.total-price');
+    totalPriceContainer.textContent = `Total Price: $${totalPrice.toFixed(2)}`;
+}
+
+function checkout() {
+    const cartItemsContainer = document.querySelector('.cart-items');
+    const totalPriceContainer = document.querySelector('.total-price');
     
-//     showHide.forEach(function (showhide) {
-//       const descriptions = document.querySelectorAll('.card-description');
-      
-//       showhide.addEventListener('click', function () {
-//         console.log('Button clicked:');
-//         descriptions.forEach(function (description) {
-//           if (description.style.display !== "none") {
-//             description.style.display = "none";
-//           } else {
-//             description.style.display = "block";
-//           }
-//         });
-//       });
-//     });
-//   });
+    const cartItems = Array.from(cartItemsContainer.children);
+    const totalPrice = parseFloat(totalPriceContainer.textContent.replace('Total Price: $', ''));
+
+    if (cartItems.length === 0) {
+        console.log('Cart is empty. Add items before checking out.');
+    } else {
+        console.log('Checkout successful!');
+        console.log('Items:');
+        cartItems.forEach(cartItem => {
+            const itemName = cartItem.textContent;
+            const itemPrice = cartItem.dataset.price;
+            console.log(`${itemName} - $${itemPrice}`);
+        });
+        console.log(`Total Price: $${totalPrice.toFixed(2)}`);
+
+        // Reset the cart
+        cartItemsContainer.innerHTML = '';
+        totalPriceContainer.textContent = 'Total Price: $0.00';
+    }
+}
