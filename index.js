@@ -22,8 +22,8 @@ function renderDevice(data) {
 
     const description = document.createElement('p');
     description.classList.add('card-description');
-    description.textContent = `This device contains ${data.data.capacity}GB of storage and features a nice ${data.data.color} color.`;
-    description.style.display = "block";
+    description.textContent = `This device contains ${data.data.capacity}GB of storage and features a ${data.data.color} color.`;
+    description.style.display = "none";
     card.appendChild(description);
 
     const showHide = document.createElement('button')
@@ -36,10 +36,52 @@ function renderDevice(data) {
     price.textContent = `Buy it now at $${data.data.price}`;
     card.appendChild(price);
 
-    price.addEventListener('click', function () {
-        console.log(price.textContent);
-    })
+    const cart = document.createElement('form');
+    cart.classList.add('device-cart');
+    const cartTitle = document.createElement('h2');
+    cartTitle.textContent = 'Cart';
+    cart.appendChild(cartTitle);
+    const cartItems = document.createElement('div');
+    cartItems.classList.add('cart-items');
+    cart.appendChild(cartItems);
 
+    price.addEventListener('click', function () {
+        price.textContent = `${title.textContent} added!`;
+        console.log(price.textContent);
+        addToCart(data);
+        totalCost(data)
+    });
+
+    showHide.addEventListener('click', function () {
+        if (description.style.display === "none") {
+            description.style.display = "block";
+            showHide.textContent = `Hide description`;
+        } else {
+            description.style.display = "none";
+            showHide.textContent = `Show description`;
+        }
+    });
+
+    function addToCart(device) {
+        const cartItemsContainer = document.querySelector('.cart-items');
+
+        const cartItem = document.createElement('div');
+        cartItem.classList.add('cart-item');
+        cartItem.textContent = device.name;
+        cartItemsContainer.appendChild(cartItem);
+    }
+
+    function totalCost(device) {
+      const cartItemsContainer = document.querySelector('.cart-items');
+
+      const priceTotal = device.data.price;
+      const priceTotalDiv = document.createElement('div');
+      priceTotalDiv.classList.add('cart-cost');
+      priceTotalDiv.textContent = priceTotal;
+      cartItemsContainer.appendChild(priceTotalDiv);
+  }
+
+    deviceContainer.appendChild(cart);
     deviceContainer.appendChild(card);
 }
 
@@ -54,10 +96,10 @@ function renderDevice(data) {
 //     })
 // })
 
-const hiButton = document.querySelector('#headButton')
-hiButton.addEventListener('click', function () {
-    console.log('hello');
-})
+// const hiButton = document.querySelector('#headButton')
+// hiButton.addEventListener('click', function () {
+//     console.log('hello');
+// })
 
 // document.addEventListener("DOMContentLoaded", function () {
 //     const showHide = document.querySelectorAll('.card-showhide');
