@@ -7,6 +7,7 @@ fetch("http://localhost:3000/devices")
         renderCart(); // Render the cart form once after all the devices are rendered
     });
 
+//Renders all devices into cards
 function renderDevice(data) {
     const deviceContainer = document.getElementById('device-container');
     //Card builder; appends image, name and description which includes price and capacity.
@@ -39,11 +40,12 @@ function renderDevice(data) {
     price.textContent = `Buy it now at $${data.data.price}`;
     card.appendChild(price);
 
+  
     price.addEventListener('click', function () {
         price.textContent = `${title.textContent} added!`;
         addToCart(data);
         calculateTotalPrice();
-    });
+    });//Adds functionality to ATC button
 
     showHide.addEventListener('click', function () {
         if (description.style.display === "none") {
@@ -53,11 +55,12 @@ function renderDevice(data) {
             description.style.display = "none";
             showHide.textContent = `Show description`;
         }
-    });
+    });//Adds functionality to descripton button
 
     deviceContainer.appendChild(card);
 }
 
+//Renders the cart once item is added
 function renderCart() {
     const deviceContainer = document.getElementById('device-container');
 
@@ -85,6 +88,7 @@ function renderCart() {
     deviceContainer.appendChild(cart);
 }
 
+//Function to add items to cart
 function addToCart(device) {
     const cartItemsContainer = document.querySelector('.cart-items');
 
@@ -95,6 +99,7 @@ function addToCart(device) {
     cartItemsContainer.appendChild(cartItem);
 }
 
+//Function to add total price of all items added to cart
 function calculateTotalPrice() {
     const cartItemsContainer = document.querySelector('.cart-items');
     const cartItems = cartItemsContainer.children;
@@ -109,6 +114,7 @@ function calculateTotalPrice() {
     totalPriceContainer.textContent = `Total Price: $${totalPrice.toFixed(2)}`;
 }
 
+//Mock checkout function 
 function checkout() {
     const cartItemsContainer = document.querySelector('.cart-items');
     const totalPriceContainer = document.querySelector('.total-price');
